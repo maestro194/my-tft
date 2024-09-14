@@ -1,11 +1,10 @@
 import Header from "../components/header";
 import { Button } from "@/components/ui/button";
 
-export default function Dashboard() {
+export default function Comps() {
     return (
         <div className="flex w-auto max-w-1/2 justify-center items-center flex-col">
-            <Header />
-            Test: This is the dashboard page
+            Test: This is the Comps page
 
             <input
                 type="text"
