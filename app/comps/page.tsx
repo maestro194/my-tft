@@ -1,18 +1,48 @@
-import Header from "../components/header";
+import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode } from "react";
+
 import { Button } from "@/components/ui/button";
 
-export default function Comps() {
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table"  
+
+export default async function Comps() {
+    let data = await fetch('https://api.vercel.app/blog')
+    let posts = await data.json()
+
     return (
-        <div className="flex w-auto max-w-1/2 justify-center items-center flex-col">
-            Test: This is the Comps page
-
-            <input
-                type="text"
-                placeholder="Enter your name"
-                className="border border-gray-300 rounded-md p-2 m-2 w-full"
-            />
-
-            <Button>Submit</Button>
+        <div className="bg-slate-600 w-full xl:w-[1080px] lg:p-5 min-h-[100vh-360px] mx-auto mt-24">
+            <Table>
+                <TableCaption>Team Comps</TableCaption>
+                <TableHeader>
+                    <TableRow>
+                        <TableCell>Champion</TableCell>
+                        <TableCell>Games</TableCell>
+                        <TableCell>Rate</TableCell>
+                        <TableCell>Place</TableCell>
+                        <TableCell>Top %</TableCell>
+                        <TableCell>Win %</TableCell>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {posts.map((post: { id: Key | null | undefined; title: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }) => (
+                        <TableRow key={post.id}>
+                            <TableCell>{post.title}</TableCell>
+                            <TableCell>{post.id}</TableCell>
+                            <TableCell>{Math.round((4 + Math.random() % 1) * 100) / 100}</TableCell>
+                            <TableCell>{Math.round((4 + Math.random() % 1) * 100) / 100}</TableCell>
+                            <TableCell>{Math.round((4 + Math.random() % 1) * 100) / 100}</TableCell>
+                            <TableCell>50%</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
         </div>
     );
 }
