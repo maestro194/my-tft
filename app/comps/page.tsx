@@ -11,10 +11,17 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"  
+import { useReactTable } from "@tanstack/react-table";
+import { DataTable } from "./data-table";
 
-export default async function Comps() {
+async function getData(): Promise<any> {
     let data = await fetch('https://api.vercel.app/blog')
     let posts = await data.json()
+    return posts;
+}
+
+export default function Comps() {
+    let posts = getData();
 
     return (
         <div className="bg-slate-600 w-full xl:w-[1080px] lg:p-5 min-h-[100vh-360px] mx-auto mt-24">
@@ -31,7 +38,7 @@ export default async function Comps() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {posts.map((post: { id: Key | null | undefined; title: string | number | bigint | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<AwaitedReactNode> | null | undefined; }) => (
+                    {posts.map((post: { id: any, title: any }) => (
                         <TableRow key={post.id}>
                             <TableCell>{post.title}</TableCell>
                             <TableCell>{post.id}</TableCell>
